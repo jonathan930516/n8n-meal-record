@@ -1,0 +1,965 @@
+{
+  "name": "三餐紀錄",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "今天吃了什麼？",
+        "formDescription": "選餐別、填內容，送出就會記到 n8n 的「三餐紀錄」資料表。日期不填就用今天。",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "日期",
+              "fieldType": "date",
+              "fieldName": "meal_date"
+            },
+            {
+              "fieldLabel": "餐別",
+              "fieldType": "dropdown",
+              "fieldName": "meal_type",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "早餐"
+                  },
+                  {
+                    "option": "午餐"
+                  },
+                  {
+                    "option": "晚餐"
+                  },
+                  {
+                    "option": "點心"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "吃了什麼",
+              "fieldName": "food",
+              "placeholder": "例如：鐵板麵",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "喝了什麼",
+              "fieldName": "drink",
+              "placeholder": "例如：奶茶"
+            },
+            {
+              "fieldLabel": "甜度",
+              "fieldType": "dropdown",
+              "fieldName": "sugar_level",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "正常糖"
+                  },
+                  {
+                    "option": "少糖"
+                  },
+                  {
+                    "option": "半糖"
+                  },
+                  {
+                    "option": "微糖"
+                  },
+                  {
+                    "option": "一分糖"
+                  },
+                  {
+                    "option": "無糖"
+                  }
+                ]
+              }
+            },
+            {
+              "fieldLabel": "冰塊",
+              "fieldType": "dropdown",
+              "fieldName": "ice_level",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "正常冰"
+                  },
+                  {
+                    "option": "少冰"
+                  },
+                  {
+                    "option": "微冰"
+                  },
+                  {
+                    "option": "去冰"
+                  },
+                  {
+                    "option": "常溫"
+                  },
+                  {
+                    "option": "溫"
+                  },
+                  {
+                    "option": "熱"
+                  }
+                ]
+              }
+            },
+            {
+              "fieldLabel": "在哪裡買／吃",
+              "fieldName": "place",
+              "placeholder": "例如：巷口早餐店"
+            },
+            {
+              "fieldLabel": "價錢",
+              "fieldType": "dropdown",
+              "fieldName": "price",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "100"
+                  },
+                  {
+                    "option": "110"
+                  },
+                  {
+                    "option": "120"
+                  },
+                  {
+                    "option": "130"
+                  },
+                  {
+                    "option": "130以上"
+                  }
+                ]
+              }
+            },
+            {
+              "fieldLabel": "備註",
+              "fieldType": "textarea",
+              "fieldName": "notes"
+            }
+          ]
+        },
+        "options": {
+          "buttonLabel": "記錄",
+          "path": "meal-logs",
+          "respondWithOptions": {
+            "values": {
+              "formSubmittedText": "已記錄，祝你有美好的一天！"
+            }
+          }
+        }
+      },
+      "id": "4776639d-b4f2-4766-973e-dab633ee1bf1",
+      "name": "三餐紀錄表單",
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.6,
+      "position": [
+        -848,
+        368
+      ],
+      "webhookId": "a5d32fb4-73ce-4443-92f0-0c3c0243a247"
+    },
+    {
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "7LywSveefPFVYt5f",
+          "cachedResultName": "三餐紀錄"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "meal_date": "={{ $json.meal_date ? $json.meal_date : $today.setZone(\"Asia/Taipei\").toFormat(\"yyyy-MM-dd\") }}",
+            "meal_type": "={{ $json.meal_type }}",
+            "food": "={{ $json.food }}",
+            "drink": "={{ $json.drink || \"\" }}",
+            "place": "={{ $json.place || \"\" }}",
+            "price": "={{ $json.price || \"\" }}",
+            "notes": "={{ $json.notes || \"\" }}",
+            "sugar_level": "={{ $json.sugar_level || \"\" }}",
+            "ice_level": "={{ $json.ice_level || \"\" }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "meal_date",
+              "displayName": "meal_date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "meal_type",
+              "displayName": "meal_type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "food",
+              "displayName": "food",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "drink",
+              "displayName": "drink",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "place",
+              "displayName": "place",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "notes",
+              "displayName": "notes",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "price",
+              "displayName": "price",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "sugar_level",
+              "displayName": "sugar_level",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "ice_level",
+              "displayName": "ice_level",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "id": "8d87e953-0e88-4540-97d5-4cba9a02856e",
+      "name": "存入三餐紀錄",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        -624,
+        368
+      ],
+      "retryOnFail": true,
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "minutesSaved": 5
+      },
+      "type": "n8n-nodes-base.timeSaved",
+      "typeVersion": 1,
+      "position": [
+        -400,
+        368
+      ],
+      "id": "65d21d39-d54b-475a-b4d3-864696476c63",
+      "name": "Time Saved"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.5,
+      "position": [
+        -848,
+        48
+      ],
+      "id": "9c199afa-3bff-42ec-9e50-5afa24552aad",
+      "name": "When chat message received",
+      "webhookId": "0d9ae19a-9680-4c67-98dc-8b1150705af5"
+    },
+    {
+      "parameters": {
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [
+        -848,
+        704
+      ],
+      "id": "ba81f64f-3076-4c64-824b-f9aa9fbadeff",
+      "name": "Basic LLM Chain"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.2,
+      "position": [
+        -784,
+        928
+      ],
+      "id": "50568d62-e6e7-4b13-9925-27914b19d7df",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "RSPLyJl2vwfZr7iY",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "You你是一位繁體中文 AI 助理。\n\n你可以使用工具協助使用者完成任務。\n\n當使用者要求數學計算時，優先使用 Calculator 工具。\n\n當使用者要求記錄三餐時，使用三餐紀錄工具。\n\n當使用者要求查詢紀錄時，使用資料庫查詢工具。\n\n只有工具成功執行後，才能告知使用者任務已完成。\n "
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        -352,
+        -64
+      ],
+      "id": "9e491fc9-6f66-4a1a-9938-e87f8bcc1646",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.2,
+      "position": [
+        -608,
+        176
+      ],
+      "id": "0c1ab6fa-fd20-4544-86c0-f1123ebaacde",
+      "name": "Google Gemini Chat Model1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "RSPLyJl2vwfZr7iY",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "meal-chat-test-001",
+        "contextWindowLength": 10
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.4,
+      "position": [
+        -480,
+        176
+      ],
+      "id": "a778455c-4bc1-4da9-b76d-1d6ef666ee06",
+      "name": "Simple Memory",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "text": "={{ $json.chatInput }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "typeVersion": 3,
+      "position": [
+        -368,
+        176
+      ],
+      "id": "d548817b-2890-463f-8293-43741eb22da9",
+      "name": "AI Agent Tool"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.toolCalculator",
+      "typeVersion": 1,
+      "position": [
+        -80,
+        176
+      ],
+      "id": "4432951d-fce9-4b73-b5ae-35cdb38aeb88",
+      "name": "Calculator"
+    },
+    {
+      "parameters": {
+        "description": "當使用者要求新增早餐、午餐或晚餐紀錄時，使用此工具。將餐別、食物內容與日期傳送至三餐紀錄子工作流程，並在確認儲存成功後回報結果。",
+        "workflowId": {
+          "__rl": true,
+          "value": "bdxZV7t03iYi4ToL",
+          "mode": "list",
+          "cachedResultName": "My Sub-Workflow 2",
+          "cachedResultUrl": "/workflow/bdxZV7t03iYi4ToL"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "mealType": "={{ $fromAI('mealType', '早餐、午餐或晚餐', 'string') }}",
+            "food": "={{ $fromAI('food', '使用者吃的食物名稱', 'string') }}",
+            "price": "={{ $fromAI('price', '餐點價格，單位為新台幣', 'number') }}",
+            "date": "={{ $fromAI('date', '用餐日期，例如今天、昨天或2026-10-11', 'string') }}",
+            "time": "={{ $now.setZone('Asia/Taipei').toISO() }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "mealType",
+              "displayName": "mealType",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "food",
+              "displayName": "food",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "date",
+              "displayName": "date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "time",
+              "displayName": "time",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "price",
+              "displayName": "price",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "number",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        64,
+        176
+      ],
+      "id": "80c9aa35-5743-46db-b6cb-1484005b8e41",
+      "name": "SaveMealRecord",
+      "notes": "今天午餐吃雞腿便當，花了100元"
+    },
+    {
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "value": "7LywSveefPFVYt5f",
+          "mode": "list",
+          "cachedResultName": "三餐紀錄",
+          "cachedResultUrl": "/projects/CboDhKKjX25fK51s/datatables/7LywSveefPFVYt5f"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "meal_date": "2026-10-11T01:32:23",
+            "meal_type": "宵夜",
+            "food": "饅頭加蛋",
+            "drink": "豆漿",
+            "place": "永和豆漿",
+            "price": "50",
+            "sugar_level": "少糖",
+            "ice_level": "少冰"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "meal_date",
+              "displayName": "meal_date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "meal_type",
+              "displayName": "meal_type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "food",
+              "displayName": "food",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "drink",
+              "displayName": "drink",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "place",
+              "displayName": "place",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "notes",
+              "displayName": "notes",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "price",
+              "displayName": "price",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "sugar_level",
+              "displayName": "sugar_level",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "ice_level",
+              "displayName": "ice_level",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        304,
+        -64
+      ],
+      "id": "426d4f5a-02f9-44bc-a3c6-5107b4c3e474",
+      "name": "Insert row",
+      "alwaysOutputData": true,
+      "executeOnce": false,
+      "retryOnFail": true,
+      "maxTries": 3
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1bqsDwLAGZU0J6o7hVhn4rMEcrGbSub8KaJW56ivCNUo",
+          "mode": "list",
+          "cachedResultName": "三餐紀錄",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1bqsDwLAGZU0J6o7hVhn4rMEcrGbSub8KaJW56ivCNUo/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "工作表1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1bqsDwLAGZU0J6o7hVhn4rMEcrGbSub8KaJW56ivCNUo/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "meal_date": "={{ DateTime.fromISO($json.meal_date).setZone('Asia/Taipei').toFormat('yyyy-MM-dd') }}",
+            "meal_type": "={{ $json.meal_type }}",
+            "price": "={{ Number($json.price) }}",
+            "drink": "={{ $json.drink }}",
+            "sugar_level": "={{ $json.sugar_level }}",
+            "ice_level": "={{ $json.ice_level }}",
+            "place": "={{ $json.place }}",
+            "notes": "={{ $json.notes }}",
+            "food": "={{ $json.food }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "meal_date",
+              "displayName": "meal_date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "meal_type",
+              "displayName": "meal_type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "food",
+              "displayName": "food",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "price",
+              "displayName": "price",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "drink",
+              "displayName": "drink",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "sugar_level",
+              "displayName": "sugar_level",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "ice_level",
+              "displayName": "ice_level",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "place",
+              "displayName": "place",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "notes",
+              "displayName": "notes",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -144,
+        384
+      ],
+      "id": "8a4276e2-4d39-4684-afe2-7001bdedb1b9",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "KCHJ8toewqMOMETM",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "documentId": {
+          "__rl": true,
+          "value": "1bqsDwLAGZU0J6o7hVhn4rMEcrGbSub8KaJW56ivCNUo",
+          "mode": "list",
+          "cachedResultName": "三餐紀錄",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1bqsDwLAGZU0J6o7hVhn4rMEcrGbSub8KaJW56ivCNUo/edit?usp=drivesdk"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -32,
+        -64
+      ],
+      "id": "2f31708c-63cb-49ad-bc3b-2f81970a873c",
+      "name": "Create sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "KCHJ8toewqMOMETM",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "三餐紀錄表單": {
+      "main": [
+        [
+          {
+            "node": "存入三餐紀錄",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "存入三餐紀錄": {
+      "main": [
+        [
+          {
+            "node": "Time Saved",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Create sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculator": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SaveMealRecord": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create sheet": {
+      "main": [
+        []
+      ]
+    },
+    "Append row in sheet": {
+      "main": [
+        []
+      ]
+    },
+    "Time Saved": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "timeSavedMode": "fixed",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "versionId": "185003f0-b174-468a-b0f1-cb41bfa96dc6",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "4c9fa2beacd35a192f8298ec8a51155c8294e162840140641fd51ea13f35b729"
+  },
+  "nodeGroups": [],
+  "id": "DPP0ChxGppsqsEK7",
+  "tags": []
+}
